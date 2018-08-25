@@ -5,18 +5,19 @@ import ballerina/math;
 import ballerina/runtime;
 import ballerina/log;
 import ballerina/http;
+import ballerina/config;
 
 int count;
 task:Timer? timer;
 
 endpoint ftp:Client invoiceSFTPClient {
     protocol: ftp:SFTP,
-    host:"10.0.0.111",
-    port:22,
+    host: config:getAsString("op-be.invoice.host"),
+    port: config:getAsInt("op-be.invoice.port"),
     secureSocket: {
         basicAuth: {
-            username: "***",
-            password: "***"
+            username: config:getAsString("op-be.invoice.host"),
+            password: config:getAsString("op-be.invoice.host")
         }
     }
 };
