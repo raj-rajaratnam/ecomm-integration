@@ -38,7 +38,7 @@ function main(string... args) {
 function generateInvoice() returns error? {
     int invoiceId = math:randomInRange(1,10000);
     string invoiceName = "ZECOMM" + invoiceId;
-    log:printInfo("Generating invoice : "+invoiceName);
+    log:printInfo("Generating invoice : " + invoiceName);
 
     xml invoices = xml `<ZECOMMINVOICE>
             <IDOC BEGIN="1">
@@ -95,6 +95,8 @@ function generateInvoice() returns error? {
     string invoiceAsString = <string> invoices;
     io:ByteChannel bchannel = io:createMemoryChannel(invoiceAsString.toByteArray("UTF-8"));
     string path = config:getAsString("op-be.invoice.sftp.path") + "/original/" + invoiceName + ".xml";
+
+    log:printInfo("Uploading invoice : " + invoiceName + " to sftp");
     error? filePutErr = invoiceSFTPClient -> put(path, bchannel);
 
     return ();
