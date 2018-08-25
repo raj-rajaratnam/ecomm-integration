@@ -25,11 +25,11 @@ endpoint ftp:Client invoiceSFTPClient {
 function main(string... args) {
 
     (function() returns error?) onTriggerFunction = generateInvoice;
-
     function(error) onErrorFunction = handleError;
 
     int interval = config:getAsInt("op-be.invoice.etl.interval");
     int delay = config:getAsInt("op-be.invoice.etl.initialDelay");
+
     timer = new task:Timer(onTriggerFunction, onErrorFunction,
         interval, delay = delay);
 
