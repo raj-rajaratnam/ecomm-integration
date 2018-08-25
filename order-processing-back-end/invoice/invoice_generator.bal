@@ -12,12 +12,12 @@ task:Timer? timer;
 
 endpoint ftp:Client invoiceSFTPClient {
     protocol: ftp:SFTP,
-    host: config:getAsString("op-be.invoice.host"),
-    port: config:getAsInt("op-be.invoice.port"),
+    host: config:getAsString("op-be.invoice.sftp.host"),
+    port: config:getAsInt("op-be.invoice.sftp.port"),
     secureSocket: {
         basicAuth: {
-            username: config:getAsString("op-be.invoice.host"),
-            password: config:getAsString("op-be.invoice.host")
+            username: config:getAsString("op-be.invoice.sftp.username"),
+            password: config:getAsString("op-be.invoice.sftp.password")
         }
     }
 };
@@ -94,7 +94,7 @@ function generateInvoice() returns error? {
     // uploading invoices to SFTP
     string invoiceAsString = <string> invoices;
     io:ByteChannel bchannel = io:createMemoryChannel(invoiceAsString.toByteArray("UTF-8"));
-    string path = config:getAsString("op-be.invoice.host.sftp.path") + "/original/" + invoiceName + ".xml";
+    string path = config:getAsString("op-be.invoice.sftp.path") + "/original/" + invoiceName + ".xml";
     error? filePutErr = invoiceSFTPClient -> put(path, bchannel);
 
     return ();
