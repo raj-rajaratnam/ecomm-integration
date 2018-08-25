@@ -94,7 +94,7 @@ function generateInvoice() returns error? {
     // uploading invoices to SFTP
     string invoiceAsString = <string> invoices;
     io:ByteChannel bchannel = io:createMemoryChannel(invoiceAsString.toByteArray("UTF-8"));
-    string path = "/Users/raj/projects/ecomm/sftp/invoice/original/" + invoiceName + ".xml";
+    string path = config:getAsString("op-be.invoice.host.sftp.path") + "/original/" + invoiceName + ".xml";
     error? filePutErr = invoiceSFTPClient -> put(path, bchannel);
 
     return ();
