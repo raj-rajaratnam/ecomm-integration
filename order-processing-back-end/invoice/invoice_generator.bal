@@ -28,8 +28,10 @@ function main(string... args) {
 
     function(error) onErrorFunction = handleError;
 
+    int interval = config:getAsInt("op-be.invoice.etl.interval");
+    int delay = config:getAsInt("op-be.invoice.etl.initialDelay");
     timer = new task:Timer(onTriggerFunction, onErrorFunction,
-        10000, delay = 500);
+        interval, delay = delay);
 
     timer.start();
     runtime:sleep(20000);
