@@ -15,6 +15,7 @@ gradle-app.setting
 target/
 
 .idea
+ecomm-integration.iml
 
 .ballerina
 ballerina.conf
