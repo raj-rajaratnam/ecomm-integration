@@ -17,5 +17,5 @@ target/
 .idea
 
 .ballerina
-
 ballerina.conf
+ballerina-internal.log
