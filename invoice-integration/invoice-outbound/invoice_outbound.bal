@@ -20,6 +20,8 @@ int interval = config:getAsInt("invoice.outbound.task.interval");
 int delay = config:getAsInt("invoice.outbound.task.delay");
 int maxRetryCount = config:getAsInt("invoice.outbound.task.maxRetryCount");
 int maxRecords = config:getAsInt("invoice.outbound.task.maxRecords");
+int apiKey = config:getAsInt("op-fe.api.key");
+
 
 function main(string... args) {
 
@@ -69,7 +71,7 @@ function doInvoiceETL() returns  error? {
 
         json jsonPayload = untaint getOpfePaymentPayload(invoice);
         req.setJsonPayload(jsonPayload);
-        req.setHeader("api-key","l7xx29ab5fa8fd5249419790cfba16f6a9fc");
+        req.setHeader("api-key",apiKey);
         string contextId = "ECOMM_" + check <string> invoice.COUNTRY_CODE;
         req.setHeader("Context-Id", contextId);
 
